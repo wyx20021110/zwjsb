@@ -18,7 +18,7 @@ class Index(ListView):
         query = self.request.GET.get('search')
         if query:
                     queryset = queryset.filter(
-            Q(title__icontains=query) | Q(body__icontains=query)
+            Q(title__icontains=query) | Q(body__icontains=query) | Q(author__username__icontains=query)
         )
 
         

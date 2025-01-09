@@ -11,11 +11,3 @@ class Column(models.Model):
         return self.title
 
 
-
-class CoursePost(models.Model):
-    title = models.CharField(max_length=100)
-    body = models.TextField()
-    order = models.IntegerField(blank=True,null=True)
-    column = models.ForeignKey(Column, on_delete=models.CASCADE)
-    def __str__(self):
-        return self.title
