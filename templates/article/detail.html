@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <!-- Article Content -->
+    <div class="article-content">
+        <header class="mb-3">
+            <h1 class="text-primary">{{ article.title }}</h1>
+            <small class="text-muted">Published on {{ article.created }}</small>
+        </header>
+        <section>
+            <p>{{ article.body }}</p>
+        </section>
+        {% if user.id and article.author.id  %}
+        <a href="{% url 'article:update' pk=article.id %}" class="btn btn-primary">修改文章</a>
+        {% endif %}
+        
+    </div>
+
+    <!-- Comments Section -->
+    <div class="comments-section mt-4">
+        <h3>Comments</h3>
+        <hr>
+        {% for comment in comments %}
+        <div class="media mb-3">
+            <div class="media-body">
+                <h5 class="mt-0">{{ comment.author }}</h5>
+                <p>{{ comment.content }}</p>
+                <small class="text-muted">发表于{{ comment.created }}</small>
+            </div>
+        </div>
+        {% empty %}
+        <p>暂无评论</p>
+        {% endfor %}
+    </div>
+
+    <!-- Comment Form -->
+    <div class="comment-form mt-4">
+        <form method="post">
+            {% csrf_token %}
+ 
+            <div class="form-group">
+                <label for="content">评论</label>
+                <textarea class="form-control" id="content" name="content" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">发送</button>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

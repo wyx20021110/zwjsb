@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center">
+    {% if articles %}
+  {% for article in articles %}
+    <div class="card col-lg-8 mb-3" >
+  <div class="card-body">
+    <div class="d-flex align-items-center mb-3">
+      <img src="{{ article.author.avatar.url }}" alt="用户头像" class="rounded-circle me-3" style="width: 50px; height: 50px;">
+      <div>
+        <h6 class="mb-0">{{ article.author.username }}</h6>
+        <small class="text-muted">{{ article.created|timesince }}前</small>
+      </div>
+      <a href="{% url 'article:detail' article.id %}" class="ms-auto text-decoration-none text-dark fw-bold">原文</a>
+    </div>
+    <h3 class="card-title">{{article.title}}</h3>
+    <p class="card-text">{{article.body}}</p>
+
+    
+  </div>
+</div>
+{% endfor %}
+
+{% else %}
+<p class="text-center">目前没有文章。</p>
+{% endif %}
+    </div>
+  </div>
+
+
+  {% if is_paginated %}
+  <nav aria-label="Pagination">
+      <ul class="pagination justify-content-center">
+          {% if page_obj.has_previous %}
+              <li class="page-item">
+                  <a class="page-link" href="/?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span> 上一页
+                  </a>
+              </li>
+      
+          {% endif %}
+          
+          {% if page_obj.has_next %}
+              <li class="page-item">
+                  <a class="page-link" href="/?page={{ page_obj.next_page_number }}" aria-label="Next">
+                      下一页 <span aria-hidden="true">&raquo;</span>
+                  </a>
+              </li>
+          {% else %}
+              <li class="page-item disabled">
+                  <span class="page-link" aria-hidden="true">下一页 &raquo;</span>
+              </li>
+          {% endif %}
+      </ul>
+      <div class="text-center mt-2">
+          <span class="text-muted">
+              第 <strong>{{ page_obj.number }}</strong> 页，共 <strong>{{ page_obj.paginator.num_pages }}</strong> 页。
+          </span>
+      </div>
+  </nav>
+  {% endif %}
+  
+    
+
+{% endblock %}

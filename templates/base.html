@@ -1,0 +1,110 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}{% endblock %}</title>
+    <link
+      rel="stylesheet"
+      href="{% static 'bootstrap/css/bootstrap.min.css' %}"
+    />
+    {% block head %}
+    {% endblock %}
+  </head>
+
+  <body>
+    <header class="p-3 mb-3 border-bottom">
+      <div class="container">
+        <div
+          class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
+        >
+          <a
+            href="/"
+            class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none"
+          >
+          </a>
+
+          <ul
+            class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
+          >
+            <li>
+              <a href="/" class="nav-link px-2 link-secondary">首页</a>
+            </li>
+            <li>
+              <a href="/course" class="nav-link px-2 link-body-emphasis">教程</a>
+            </li>
+            <li>
+              <a href="#" class="nav-link px-2 link-body-emphasis">课堂</a>
+            </li>
+            <li>
+              <a href="#" class="nav-link px-2 link-body-emphasis">更多</a>
+            </li>
+          </ul>
+
+          <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+            <input
+              type="search"
+              class="form-control"
+              name="search"
+              placeholder="Search..."
+              aria-label="Search"
+            />
+          </form>
+
+          {% if user.is_authenticated %}
+          <div class="dropdown text-end">
+            <a
+              href="#"
+              class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+            {% if user.avatar %}
+              <img
+                src="{{ user.avatar.url}}"
+                alt="avatar"
+                width="32"
+                height="32"
+                class="rounded-circle"
+              />
+            {% else %}
+              <img
+                src="{% static 'img/default.jpg' %}"
+                alt="avatar"
+                width="32"
+                height="32"
+                class="rounded-circle"
+              />
+              {% endif %}
+            </a>
+            <ul class="dropdown-menu text-small">
+              <li><a class="dropdown-item" href="{% url 'article:create' %}">写文章</a></li>
+              <li><a class="dropdown-item" href="#">设置</a></li>
+              <li>
+                <a class="dropdown-item" href="/user/profile">我的空间</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <form
+                  method="post"
+                  action="{% url 'user:logout' %}"
+                  style="display: inline"
+                >
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item">退出登录</button>
+                </form>
+              </li>
+            </ul>
+
+            {% else %}
+            <a href="/user/login" class="nav-link px-2 link-secondary">登录</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </header>
+    {% block content %}{% endblock content %}
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>

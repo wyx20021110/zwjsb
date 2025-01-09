@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% block title %}
+用户注册
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 100vh; background-color: #f5f5f5;">
+    <div class="row justify-content-center w-100">
+        <div class="col-sm-10 col-md-8 col-lg-5 col-xl-4">
+            <div class="card shadow-lg border-0" style="border-radius: 15px;">
+                <div class="card-header text-center text-white py-4" 
+                     style="background: linear-gradient(45deg, #d9a9f7, #a280f7); border-top-left-radius: 15px; border-top-right-radius: 15px; font-size: 1.5rem; font-weight: bold;">
+                    欢迎注册
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+             
+                        <!-- 用户名输入框 -->
+                        <div class="form-floating mb-3">
+                            <input 
+                                type="text" 
+                                id="id_username" 
+                                name="username" 
+                                class="form-control {% if errors.username %}is-invalid{% endif %}" 
+                                placeholder="用户名" 
+                                value="{{ username|default:'' }}" 
+                                style="border-radius: 10px;" 
+                                required>
+                            <label for="id_username">用户名</label>
+                            {% if errors.username %}
+                                <div class="invalid-feedback">
+                                    {{ errors.username }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- 邮箱输入框 -->
+                        <div class="form-floating mb-3">
+                            <input 
+                                type="email" 
+                                id="id_email" 
+                                name="email" 
+                                class="form-control {% if errors.email %}is-invalid{% endif %}" 
+                                placeholder="邮箱" 
+                                value="{{ email|default:'' }}" 
+                                style="border-radius: 10px;" 
+                                required>
+                            <label for="id_email">邮箱</label>
+                            {% if errors.email %}
+                                <div class="invalid-feedback">
+                                    {{ errors.email }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- 密码输入框 -->
+                        <div class="form-floating mb-3">
+                            <input 
+                                type="password" 
+                                id="id_password1" 
+                                name="password1" 
+                                class="form-control {% if errors.password1 %}is-invalid{% endif %}" 
+                                placeholder="密码" 
+                                style="border-radius: 10px;" 
+                                required>
+                            <label for="id_password1">密码</label>
+                            {% if errors.password1 %}
+                                <div class="invalid-feedback">
+                                    {{ errors.password1 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- 确认密码输入框 -->
+                        <div class="form-floating mb-4">
+                            <input 
+                                type="password" 
+                                id="id_password2" 
+                                name="password2" 
+                                class="form-control {% if errors.password2 %}is-invalid{% endif %}" 
+                                placeholder="确认密码" 
+                                style="border-radius: 10px;" 
+                                required>
+                            <label for="id_password2">确认密码</label>
+                            {% if errors.password2 %}
+                                <div class="invalid-feedback">
+                                    {{ errors.password2 }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- 注册按钮 -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-light btn-lg" style="border-radius: 10px; background-color: #d9a9f7; color: white;">注册</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                    <p class="text-muted mb-0">已经有账户？<a href="/user/login/" class="text-primary">立即登录</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

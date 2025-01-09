@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+  <div class="row justify-content-center ">
+  {% for column in columns %}
+  <div class="card mb-3 p-0">
+    <div class="row g-0">
+      <div class="col-md-4 p-0">
+        <img src="{{column.img.url}}" class="img-fluid rounded-start" alt="..."
+             style="width: 100%; height: 200px; object-fit: cover;">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{column.title}}</h5>
+          <p class="card-text"><small class="text-body-secondary">{{column.introduction}}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+{% endfor %}
+    </div>
+  </div>
+
+{% endblock %}

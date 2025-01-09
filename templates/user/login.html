@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}
+用户登录
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 100vh; background-color: #f5f5f5;">
+    <div class="row justify-content-center w-100">
+        <div class="col-sm-10 col-md-8 col-lg-5 col-xl-4">
+            <div class="card shadow-lg border-0" style="border-radius: 15px;">
+                <div class="card-header text-center text-white py-4" 
+                     style="background: linear-gradient(45deg, #d9a9f7, #a280f7); border-top-left-radius: 15px; border-top-right-radius: 15px; font-size: 1.5rem; font-weight: bold;">
+                    欢迎登录
+                </div>
+                <div class="card-body p-4">
+                    <form method="post">
+                        {% csrf_token %}
+                        <!-- 用户名输入框 -->
+                        <div class="form-floating mb-3">
+                            <input 
+                                type="text" 
+                                id="id_username" 
+                                name="username" 
+                                class="form-control {% if form.username.errors %}is-invalid{% endif %}" 
+                                placeholder="用户名" 
+                                value="{{ form.username.value|default:'' }}" 
+                                style="border-radius: 10px;" 
+                                required>
+                            <label for="id_username">用户名</label>
+                            {% if form.username.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.username.errors|join:", " }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- 密码输入框 -->
+                        <div class="form-floating mb-4">
+                            <input 
+                                type="password" 
+                                id="id_password" 
+                                name="password" 
+                                class="form-control {% if form.password.errors %}is-invalid{% endif %}" 
+                                placeholder="密码" 
+                                style="border-radius: 10px;" 
+                                required>
+                            <label for="id_password">密码</label>
+                            {% if form.password.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.password.errors|join:", " }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- 登录按钮 -->
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-light btn-lg" style="border-radius: 10px; background-color: #d9a9f7; color: white;">登录</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center" style="border-bottom-left-radius: 15px; border-bottom-right-radius: 15px;">
+                    <p class="text-muted mb-0">还没有账户？<a href="/user/register/" class="text-primary">立即注册</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
